@@ -1,0 +1,2 @@
+export(catplot)
+export(logoing_func)
