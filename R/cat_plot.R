@@ -9,8 +9,8 @@ catplot <- function(xs, ys, size=0.1, catmode=1, title="") {
 	plot(x=xs, y=ys, col=0, xaxt="n", yaxt="n")
 	title(main=title)
 	par(usr=c(0,1,0,1))
-	axis(side=1, at=seq(0.1,1.0,0.1), labels=xs)
-	axis(side=2, at=seq(0.1,1.0,0.1), labels=ys)
+	axis(side=1, at=seq(1/length(xs),1.0,1/length(xs)), labels=xs)
+	axis(side=2, at=seq(1/length(xs),1.0,1/length(xs)), labels=ys)
 
 	img <- catdat[[catmode]]
 	dims<-dim(img)[1:2] #number of x-y pixels for the img (aspect ratio)
