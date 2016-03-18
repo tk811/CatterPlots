@@ -3,8 +3,12 @@ Did you ever wish you could make scatter plots with cat shaped points?  Now you 
 
 Go ahead, treat yourself! There's over 10 cat models now!
 
-git clone the repo and install using:
-
+To install, either:
+```
+library(devtools)
+install_github("Gibbsdavidl/CatterPlot")
+```
+Or git clone the repo and then install using:
 ```
 R CMD INSTALL CatterPlot
 ```
