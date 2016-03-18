@@ -17,7 +17,18 @@
 # limitations under the License.
 #
 
-.onLoad <- function(libname = find.package("CatterPlot"), pkgname = "CatterPlot") {
-	require(png)
-	packageStartupMessage("\nWelcome to CatterPlot.\n")
+
+# cat loader
+
+# make sure the cats have transparent backgrounds!
+
+library(png)
+
+createCatList <- function(dir) {
+	fs <- list.files(dir, pattern="png")
+	catlist <- vector("list", length(fs))
+	for (i in 1:length(fs)) {
+		catlist[[i]] <- png::readPNG(source=paste0(dir,fs[i]))
+	}
+	catlist
 }
