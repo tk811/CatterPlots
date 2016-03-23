@@ -17,11 +17,9 @@ In R:
 
 ```
 library(CatterPlot)
-x <- 1:10
-y <- 1:10
-catplot(x,y,0.1)
-catplot(x,y^2,0.1)
-catplot(x^2,y,0.1)
+x <- 1:5
+y <- 1:5
+catplot(x,y, size=0.25, 0.1, type="line", cat=10, linecolor=3, catcolor=c(0,0,0,1))
 ```
 
 NEW cat modes coming soon!

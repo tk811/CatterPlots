@@ -18,17 +18,17 @@
 #
 
 
-catplot <- function(xs, ys, size=0.1, catmode=1, title="") {
+catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1), linecolor=1, type="justcats", xlab="", ylab="", title="") {
 	require(png)
 	data(cats)
 
 	plot(x=xs, y=ys, col=0, xaxt="n", yaxt="n")
 	title(main=title)
 	par(usr=c(0,1,0,1))
-	axis(side=1, at=seq(1/length(xs),1.0,1/length(xs)), labels=sort(xs))
-	axis(side=2, at=seq(1/length(xs),1.0,1/length(xs)), labels=sort(ys))
+	#axis(side=1, at=seq(1/length(xs), 1.0, 1/length(xs)), labels=seq(min(xs), max(xs), 1))
+	#axis(side=2, at=seq(1/length(ys), 1.0, 1/length(ys)), labels=seq(min(ys), max(ys), 1))
 
-	img <- catdat[[catmode]]
+	img <- catdat[[cat]]
 	dims<-dim(img)[1:2] #number of x-y pixels for the img (aspect ratio)
   AR<-dims[1]/dims[2]
 
@@ -37,7 +37,37 @@ catplot <- function(xs, ys, size=0.1, catmode=1, title="") {
 	xscale <- xscale/max(xscale)
 	yscale <- yscale/max(yscale)
 
-	rasterImage(img, xscale-(size/2), yscale-(size/2), xscale+(size/2), yscale+(size/2), interpolate=TRUE)
+	# modify the cat image
+	imgMod <- colorMod(img, catcolor)
+
+	if (type == "line") {
+		points(x=xscale, y=yscale, col=linecolor, type="l")
+	}
+	rasterImage(imgMod, xscale-(size/2), yscale-(size/2), xscale+(size/2), yscale+(size/2), interpolate=TRUE)
 }
 
+#catplot(x,y, 0.2, 2, type="l")
+
 # catplot(xs=abs(rnorm(10)), ys=abs(rnorm(10)), size=0.15, catmode=1, title="Cat Plot 1")
+
+
+colorMod <- function(img, colorVec=c(0,0,0,1)) {
+	# the cat pngs are 72x72x4, where each of those 4 layers
+	# represents one component of the RGB color space.
+	# this function takes the last, black layer, and creates
+	# a new vector, multiplying colorVec by that c(0,0,0,x)
+
+	for (i in 1:72) {
+		for (j in 1:72) {
+				imgSum <- min(sum(img[i,j,1:4]), 1)
+				if (imgSum > 0.0) {
+					val <- img[i,j,4]
+					img[i,j,1:4] <- colorVec
+					img[i,j,1:4] <- img[i,j,1:4] * imgSum
+				} else {
+					img[i,j,1:4] <- c(0,0,0,0)
+				}
+		}
+	}
+	img
+}
