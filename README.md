@@ -1,4 +1,4 @@
-# CatterPlot
+# CatterPlots
 Did you ever wish you could make scatter plots with cat shaped points?  Now you can!
 
 ![alt cat1](https://github.com/Gibbsdavidl/CatterPlot/blob/master/examples/cat_lines.png)
@@ -12,7 +12,7 @@ install_github("Gibbsdavidl/CatterPlot")
 ```
 Or git clone the repo and then install using:
 ```
-R CMD INSTALL CatterPlot
+R CMD INSTALL CatterPlots
 ```
 
 In R:
