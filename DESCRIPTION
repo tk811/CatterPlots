@@ -1,4 +1,4 @@
-Package: CatterPlot
+Package: CatterPlots
 Type: Package
 Title: Plots with Cats
 Version: 0.0.1
@@ -9,7 +9,7 @@ Depends: R (>= 3.1.0)
 Imports: png
 Suggests:
 Description: You can make plots with cats!
-License: MIT + file LICENSE
+License: Apache2.0 + file LICENSE
 LazyData: false
 Encoding: UTF-8
 URL: https://github.com/Gibbsdavidl/CatterPlot
