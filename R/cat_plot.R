@@ -18,13 +18,13 @@
 #
 
 
-catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1), linecolor=1, type="justcats", xlab="", ylab="", title="") {
+catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
+										linecolor=1, type="justcats", canvas=c(0,1,0,1), ...) {
 	require(png)
 	data(cats)
 
-	plot(x=xs, y=ys, col=0, xaxt="n", yaxt="n")
-	title(main=title)
-	par(usr=c(0,1,0,1))
+	plot(x=xs, y=ys, col=0, xaxt="n", yaxt="n", ...)
+	par(usr=canvas)
 	#axis(side=1, at=seq(1/length(xs), 1.0, 1/length(xs)), labels=seq(min(xs), max(xs), 1))
 	#axis(side=2, at=seq(1/length(ys), 1.0, 1/length(ys)), labels=seq(min(ys), max(ys), 1))
 
@@ -44,11 +44,38 @@ catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1), linecolor=1,
 		points(x=xscale, y=yscale, col=linecolor, type="l")
 	}
 	rasterImage(imgMod, xscale-(size/2), yscale-(size/2), xscale+(size/2), yscale+(size/2), interpolate=TRUE)
+	list(xs=x, ys=y, canvas=canvas)
 }
 
 #catplot(x,y, 0.2, 2, type="l")
 
 # catplot(xs=abs(rnorm(10)), ys=abs(rnorm(10)), size=0.15, catmode=1, title="Cat Plot 1")
+
+
+cats <- function(obj, xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
+										linecolor=1, type="justcats") {
+	# needs a plot already up, and the catObj returned from it.
+
+	img <- catdat[[cat]]
+	dims<-dim(img)[1:2] #number of x-y pixels for the img (aspect ratio)
+  AR<-dims[1]/dims[2]
+
+	xscale <- xs + (-min(c(0,xs)))
+	yscale <- ys + (-min(c(0,ys)))
+	objxscale <- obj$xs + (-min(c(0,obj$xs)))
+	objyscale <- obj$ys + (-min(c(0,obj$ys)))
+	xscale <- xscale/max(objxscale)
+	yscale <- yscale/max(objyscale)
+
+	# modify the cat image
+	imgMod <- colorMod(img, catcolor)
+
+	if (type == "line") {
+		points(x=xscale, y=yscale, col=linecolor, type="l")
+	}
+	rasterImage(imgMod, xscale-(size/2), yscale-(size/2),
+											xscale+(size/2), yscale+(size/2), interpolate=TRUE)
+}
 
 
 colorMod <- function(img, colorVec=c(0,0,0,1)) {
