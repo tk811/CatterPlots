@@ -1,7 +1,7 @@
 # CatterPlots
 Did you ever wish you could make scatter plots with cat shaped points?  Now you can!
 
-![alt cat1](https://github.com/Gibbsdavidl/CatterPlot/blob/master/examples/cat_lines_2.png){ width: 200px; }
+<img src="https://github.com/Gibbsdavidl/CatterPlot/blob/master/examples/cat_lines_2.png" width="48">
 
 Go ahead, treat yourself! There's over 10 cat models now!
 
