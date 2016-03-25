@@ -23,6 +23,8 @@ catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
 	require(png)
 	data(cats)
 
+	args <- list(...)
+
 	plot(x=xs, y=ys, col=0, xaxt="n", yaxt="n", ...)
 	par(usr=canvas)
 
@@ -30,11 +32,9 @@ catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
 	dims<-dim(img)[1:2] #number of x-y pixels for the img (aspect ratio)
   AR<-dims[1]/dims[2]
 
-	xscale <- xs + (-min(c(0,xs)))
-	yscale <- ys + (-min(c(0,ys)))
-	maxn   <- max(c(xscale,yscale))
-	xscale <- xscale/maxn
-	yscale <- yscale/maxn
+	scaledData <- scaleData(xs,ys,args)
+	xscale <- scaledData$xscale
+	yscale <- scaledData$yscale
 
 	xat = seq(min(xscale), max(xscale), length.out=length(xscale))
 	yat = seq(min(yscale), max(yscale), length.out=length(yscale))
@@ -43,7 +43,6 @@ catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
 	axis(side=1, at=xat, labels=xaxtlab)
 	axis(side=2, at=yat, labels=yaxtlab)
 
-
 	# modify the cat image
 	imgMod <- colorMod(img, catcolor)
 
@@ -51,7 +50,7 @@ catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
 		points(x=xscale, y=yscale, col=linecolor, type="l")
 	}
 	rasterImage(imgMod, xscale-(size/2), yscale-(size/2), xscale+(size/2), yscale+(size/2), interpolate=TRUE)
-	list(xs=x, ys=y, canvas=canvas)
+	list(xs=x, ys=y, args=args, canvas=canvas)
 }
 
 #catplot(x,y, 0.2, 2, type="l")
@@ -67,12 +66,9 @@ cats <- function(obj, xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
 	dims<-dim(img)[1:2] #number of x-y pixels for the img (aspect ratio)
   AR<-dims[1]/dims[2]
 
-	xscale <- xs + (-min(c(0,xs)))
-	yscale <- ys + (-min(c(0,ys)))
-	objxscale <- obj$xs + (-min(c(0,obj$xs)))
-	objyscale <- obj$ys + (-min(c(0,obj$ys)))
-	xscale <- xscale/max(objxscale)
-	yscale <- yscale/max(objyscale)
+	scaledData <- catsScaleData(obj,xs,ys)
+	xscale <- scaledData$xscale
+	yscale <- scaledData$yscale
 
 	# modify the cat image
 	imgMod <- colorMod(img, catcolor)
@@ -104,4 +100,47 @@ colorMod <- function(img, colorVec=c(0,0,0,1)) {
 		}
 	}
 	img
+}
+
+
+scaleData <- function(xs,ys,args) {
+	# first shift the data to the positive region
+	xscale <- xs + (-min(c(0,xs)))
+	yscale <- ys + (-min(c(0,ys)))
+	xscale <- xscale/max(xscale)
+	yscale <- yscale/max(yscale)
+
+	if ("xlim" %in% names(args)) {
+		xscale <- xs + (-min(c(args$xlim,xs)))
+		xscale <- xscale/max(args$xlim)
+	}
+	if ("ylim" %in% names(args)) {
+		yscale <- ys + (-min(c(args$ylim,ys)))
+		yscale <- yscale/max(args$ylim)
+	}
+	list(xscale=xscale, yscale=yscale)
+}
+
+
+catsScaleData <- function(obj,xs,ys) {
+	args <- obj$args
+
+	# first shift the data to the positive region
+	xscale <- xs + (-min(c(0,xs)))
+	yscale <- ys + (-min(c(0,ys)))
+	# put it in the frame of the previous plot
+	objxscale <- obj$xs + (-min(c(0,obj$xs)))
+	objyscale <- obj$ys + (-min(c(0,obj$ys)))
+	xscale <- xscale/max(objxscale)
+	yscale <- yscale/max(objyscale)
+
+	if ("xlim" %in% names(args)) {
+		xscale <- xs + (-min(c(args$xlim,xs)))
+		xscale <- xscale/max(args$xlim)
+	}
+	if ("ylim" %in% names(args)) {
+		yscale <- ys + (-min(c(args$ylim,ys)))
+		yscale <- yscale/max(args$ylim)
+	}
+	list(xscale=xscale, yscale=yscale)
 }
