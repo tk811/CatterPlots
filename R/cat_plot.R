@@ -19,14 +19,12 @@
 
 
 catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
-										linecolor=1, type="justcats", canvas=c(0,1,0,1), ...) {
+										linecolor=1, type="justcats", canvas=c(0,1.1,0,1.1), ...) {
 	require(png)
 	data(cats)
 
 	plot(x=xs, y=ys, col=0, xaxt="n", yaxt="n", ...)
 	par(usr=canvas)
-	#axis(side=1, at=seq(1/length(xs), 1.0, 1/length(xs)), labels=seq(min(xs), max(xs), 1))
-	#axis(side=2, at=seq(1/length(ys), 1.0, 1/length(ys)), labels=seq(min(ys), max(ys), 1))
 
 	img <- catdat[[cat]]
 	dims<-dim(img)[1:2] #number of x-y pixels for the img (aspect ratio)
@@ -34,8 +32,17 @@ catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
 
 	xscale <- xs + (-min(c(0,xs)))
 	yscale <- ys + (-min(c(0,ys)))
-	xscale <- xscale/max(xscale)
-	yscale <- yscale/max(yscale)
+	maxn   <- max(c(xscale,yscale))
+	xscale <- xscale/maxn
+	yscale <- yscale/maxn
+
+	xat = seq(min(xscale), max(xscale), length.out=length(xscale))
+	yat = seq(min(yscale), max(yscale), length.out=length(yscale))
+	xaxtlab = round(seq(min(xs), max(xs),length.out=length(xat)),2)
+	yaxtlab = round(seq(min(ys), max(ys),length.out=length(xat)),2)
+	axis(side=1, at=xat, labels=xaxtlab)
+	axis(side=2, at=yat, labels=yaxtlab)
+
 
 	# modify the cat image
 	imgMod <- colorMod(img, catcolor)
