@@ -2,6 +2,7 @@
 Your source for cat themed plots.
 
 <img src="https://github.com/Gibbsdavidl/CatterPlot/blob/master/examples/catplot_ex_6.png" width="600">
+<img src="https://github.com/Gibbsdavidl/CatterPlot/blob/master/examples/random_cats.png" width="600">
 
 Go ahead, treat yourself! There's over 10 cat models now!
 
@@ -29,5 +30,12 @@ cats(purr, -x, -y, cat=4, catcolor=c(1,0,1,1))
 # for more fun ...
 meow <- multicat(xs=x, ys=y, cat=c(1,2,3), catcolor=list(c(1,1,0,1),c(0,1,1,1)), canvas=c(-0.1,1.1, -0.1, 1.1))
 morecats(purr, x, 10*sin(x)+40, size=0.05, cat=c(4,5,6), catcolor=list(c(0,0,1,1),c(0,1,0,1)), type="line")
+
+# random cats
+meow <- multicat(xs=x, ys=rnorm(21),
+                 cat=c(1,2,3,4,5,6,7,8,9,10),
+                 catcolor=list(c(0,0,0,1)),
+                 canvas=c(-0.1,1.1, -0.1, 1.1),
+                 xlab="some cats", ylab="other cats", main="Random Cats")
 
 ```
