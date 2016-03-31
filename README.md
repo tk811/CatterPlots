@@ -1,7 +1,7 @@
 # CatterPlots
 Your source for cat themed plots.
 
-<img src="https://github.com/Gibbsdavidl/CatterPlot/blob/master/examples/catplot_ex_6.png" width="300">
+<img src="https://github.com/Gibbsdavidl/CatterPlot/blob/master/examples/catplot_ex_6.png" width="600">
 
 Go ahead, treat yourself! There's over 10 cat models now!
 
