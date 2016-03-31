@@ -1,5 +1,5 @@
 # CatterPlots
-Your source for cat themed plots.
+One stop shopping for cat themed scatter plots.
 
 <img src="https://github.com/Gibbsdavidl/CatterPlot/blob/master/examples/catplot_ex_6.png" width="600">
 <img src="https://github.com/Gibbsdavidl/CatterPlot/blob/master/examples/random_cats.png" width="600">
