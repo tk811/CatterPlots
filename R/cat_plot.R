@@ -18,8 +18,29 @@
 #
 
 
-catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
-										linecolor=1, type="justcats", canvas=c(0,1.1,0,1.1), ...) {
+#' Make a cat plot
+#'
+#' @param xs a vector of numbers
+#' @param ys another vector of numbers
+#' @param size the size of the cat (0.1 is a good starting point)
+#' @param cat the cat model, 1 through 12
+#' @param catcolor a modifier vector to the png matrix (try c(1,0,0,1))
+#' @param linecolor color of plotted lines
+#' @param type the type of plot ... justcats, or line
+#' @param canvas the plotting area
+#'
+#' @return a cat plot object... to plot more cats.
+#' @examples
+#' x <- -10:10
+#' y <- -x^2 + 10
+#' purr <- catplot(xs=x, ys=y, cat=3, catcolor=c(0,1,1,1))
+#' cats(purr, -x, -y, cat=4, catcolor=c(1,0,1,1))'
+#' @export
+catplot <- function(xs, ys,
+					size=0.1, cat=1,
+					catcolor = c(0,0,0,1),
+					linecolor=1, type="justcats",
+					canvas=c(0,1.1,0,1.1), ...) {
 	require(png)
 	data(cats)
 
@@ -30,7 +51,7 @@ catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
 
 	img <- catdat[[cat]]
 	dims<-dim(img)[1:2] #number of x-y pixels for the img (aspect ratio)
-  AR<-dims[1]/dims[2]
+	AR<-dims[1]/dims[2]
 
 	scaledData <- scaleData(xs,ys,args)
 	xscale <- scaledData$xscale
@@ -53,18 +74,35 @@ catplot <- function(xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
 	list(xs=x, ys=y, args=args, canvas=canvas)
 }
 
-#catplot(x,y, 0.2, 2, type="l")
-
-# catplot(xs=abs(rnorm(10)), ys=abs(rnorm(10)), size=0.15, catmode=1, title="Cat Plot 1")
-
-
-cats <- function(obj, xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
+#' Plot more cats!
+#'
+#' @param obj a catplot object, returned from catplot
+#' @param xs a vector of numbers
+#' @param ys another vector of numbers
+#' @param size the size of the cat (0.1 is a good starting point)
+#' @param cat the cat model, 1 through 12
+#' @param catcolor a modifier vector to the png matrix (try c(1,0,0,1))
+#' @param linecolor color of plotted lines
+#' @param type the type of plot ... justcats, or line
+#'
+#' @return a cat plot object... to plot more cats.
+#' @examples
+#' x <- -10:10
+#' y <- -x^2 + 10
+#' purr <- catplot(xs=x, ys=y, cat=3, catcolor=c(0,1,1,1))
+#' cats(purr, -x, -y, cat=4, catcolor=c(1,0,1,1))'
+#' @export
+cats <- function(obj=NULL, xs, ys, size=0.1, cat=1, catcolor = c(0,0,0,1),
 										linecolor=1, type="justcats") {
 	# needs a plot already up, and the catObj returned from it.
+	if(is.null(obj)) {
+		print("Please feed the cats!  cat_food <- catplot(...);  cats(cat_food, ...)")
+	}
+
 
 	img <- catdat[[cat]]
 	dims<-dim(img)[1:2] #number of x-y pixels for the img (aspect ratio)
-  AR<-dims[1]/dims[2]
+	AR<-dims[1]/dims[2]
 
 	scaledData <- catsScaleData(obj,xs,ys)
 	xscale <- scaledData$xscale

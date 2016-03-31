@@ -1,9 +1,11 @@
 # CatterPlots
-Did you ever wish you could make scatter plots with cat shaped points?  Now you can!
+Your source for cat themed plots.
 
 <img src="https://github.com/Gibbsdavidl/CatterPlot/blob/master/examples/cat_lines_2.png" width="300">
 
 Go ahead, treat yourself! There's over 10 cat models now!
+
+Well, exactly 11, actually. Eleven types of cats.
 
 To install, either:
 ```
@@ -19,8 +21,8 @@ In R:
 
 ```
 library(CatterPlots)
-x <- 1:5
-y <- 1:5
-obj <- catplot(x,y, size=0.25, 0.1, type="line", cat=10, linecolor=3, catcolor=c(0,0,0,1))
-cats(obj, x*0.5, y*0.5, cat=5, catcolor=c(1,1,0,1))
+x <- -10:10
+y <- -x^2 + 10
+purr <- catplot(xs=x, ys=y, cat=3, catcolor=c(0,1,1,1))
+cats(purr, -x, -y, cat=4, catcolor=c(1,0,1,1))
 ```

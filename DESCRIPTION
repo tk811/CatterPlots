@@ -2,7 +2,7 @@ Package: CatterPlots
 Type: Package
 Title: Plots with Cats
 Version: 0.0.2
-Date: 2016-07-03
+Date: 2016-03-07
 Author: David Gibbs
 Maintainer: David Gibbs <dgibbs@systemsbiology.org>
 Depends: R (>= 3.1.0)
